@@ -15,9 +15,6 @@ export default function Home() {
           Your all-in-one platform for managing rent, staying in touch with your landlord,
           and keeping your payments organized — beautifully.
         </p>
-        <p className="text-md max-w-md text-center text-white/80">
-          Use the navigation bar above to check messages or review your rent details.
-        </p>
       </main>
     </>
   );
