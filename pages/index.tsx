@@ -1,5 +1,5 @@
 import Navbar from '../components/Navbar';
-import useAuthProtection from '../hooks/useAuthProtection';
+import useAuthProtection from '../src/hooks/useAuthProtection';
 
 export default function Home() {
   useAuthProtection();

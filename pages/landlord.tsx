@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { db, auth } from '../firebase';
+import { db, auth } from '../src/firebase';
 import { collection, addDoc, query, onSnapshot, orderBy, Timestamp } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import Navbar from '../components/Navbar';
-import useAuthProtection from '../hooks/useAuthProtection';
+import useAuthProtection from '../src/hooks/useAuthProtection';
 
 export default function LandlordChat() {
   useAuthProtection();
