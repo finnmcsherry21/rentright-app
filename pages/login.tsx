@@ -19,21 +19,23 @@ export default function Login() {
 
         {/* Email */}
         <input
-          type="email"
-          placeholder="Email"
+         type="email"             // ✅ allows normal text
+         placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="..."
         />
+
 
         {/* Password */}
         <input
-          type="password"
+          type="password"          // ✅ hides text as dots
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
+          className="..."
+/>
+
 
         <button
           type="submit"
