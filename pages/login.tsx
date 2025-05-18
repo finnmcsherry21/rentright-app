@@ -1,43 +1,38 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../src/firebase';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  // Dummy user data (for testing only)
-  const dummyUser = {
-    email: 'test@example.com',
-    password: 'password123',
-  };
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email === dummyUser.email && password === dummyUser.password) {
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       alert('Login successful!');
       router.push('/');
-    } else {
-      alert('Invalid email or password.');
+    } catch (error: any) {
+      alert(`Login failed: ${error.message}`);
     }
   };
 
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email && password) {
-      alert('Signup successful! (Simulated)');
+  const handleSignup = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert('Signup successful!');
       router.push('/');
-    } else {
-      alert('Please enter an email and password to sign up.');
+    } catch (error: any) {
+      alert(`Signup failed: ${error.message}`);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 text-white">
-      <form className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md space-y-6">
+      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md space-y-6">
         <h1 className="text-3xl font-bold text-center">Welcome to RentRight</h1>
 
-        {/* Email input */}
         <input
           type="email"
           placeholder="Email"
@@ -47,7 +42,6 @@ export default function Login() {
           required
         />
 
-        {/* Password input */}
         <input
           type="password"
           placeholder="Password"
@@ -57,22 +51,23 @@ export default function Login() {
           required
         />
 
-        {/* Buttons */}
         <div className="flex justify-between gap-4">
           <button
+            type="button"
             onClick={handleLogin}
             className="flex-1 bg-indigo-600 hover:bg-indigo-700 transition py-2 rounded text-lg font-semibold"
           >
             Log In
           </button>
           <button
+            type="button"
             onClick={handleSignup}
             className="flex-1 bg-green-600 hover:bg-green-700 transition py-2 rounded text-lg font-semibold"
           >
             Sign Up
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

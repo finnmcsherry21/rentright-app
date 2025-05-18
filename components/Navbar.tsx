@@ -14,13 +14,18 @@ export default function Navbar() {
         {/* Navigation Links */}
         <div className="flex gap-8 text-lg font-medium">
           <Link href="/login">
-            <span className="hover:text-white/80 transition cursor-pointer">
+            <span className="hover:font-bold hover:text-white/80 transition cursor-pointer">
               Login
             </span>
           </Link>
           <Link href="/landlord">
-            <span className="hover:text-white/80 transition cursor-pointer">
+            <span className="hover:font-bold hover:text-white/80 transition cursor-pointer">
               Landlord
+            </span>
+          </Link>
+          <Link href="/rent">
+            <span className="hover:font-bold hover:text-white/80 transition cursor-pointer">
+              Rent
             </span>
           </Link>
         </div>

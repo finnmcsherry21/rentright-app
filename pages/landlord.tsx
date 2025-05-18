@@ -63,12 +63,15 @@ export default function LandlordChat() {
 
         <div className="border h-80 overflow-y-scroll mb-4 p-2 bg-white rounded shadow">
           {messages.map((msg, index) => (
-            <div key={index} className="mb-2">
+            <div key={index} className="mb-2 text-black">
+              <div>
               <strong>{msg.sender}:</strong> {msg.text}
+             </div>
               <div className="text-xs text-gray-500">
-                {msg.timestamp?.toDate().toLocaleString()}
+               {msg.timestamp?.toDate().toLocaleString()}
               </div>
             </div>
+
           ))}
         </div>
 
