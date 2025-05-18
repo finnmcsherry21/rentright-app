@@ -1,14 +1,28 @@
 import { useEffect, useState } from 'react';
 import { db, auth } from '../src/firebase';
-import { collection, addDoc, query, onSnapshot, orderBy, Timestamp } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  query,
+  onSnapshot,
+  orderBy,
+  Timestamp,
+  DocumentData,
+} from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import Navbar from '../components/Navbar';
 import useAuthProtection from '../src/hooks/useAuthProtection';
 
+interface Message extends DocumentData {
+  text: string;
+  sender: string;
+  timestamp: Timestamp;
+}
+
 export default function LandlordChat() {
   useAuthProtection();
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -18,7 +32,7 @@ export default function LandlordChat() {
 
     const q = query(collection(db, 'messages'), orderBy('timestamp'));
     const unsubscribeMessages = onSnapshot(q, (snapshot) => {
-      const msgs = snapshot.docs.map((doc) => doc.data());
+      const msgs = snapshot.docs.map((doc) => doc.data() as Message);
       setMessages(msgs);
     });
 
@@ -51,6 +65,9 @@ export default function LandlordChat() {
           {messages.map((msg, index) => (
             <div key={index} className="mb-2">
               <strong>{msg.sender}:</strong> {msg.text}
+              <div className="text-xs text-gray-500">
+                {msg.timestamp?.toDate().toLocaleString()}
+              </div>
             </div>
           ))}
         </div>
@@ -58,12 +75,17 @@ export default function LandlordChat() {
         <form onSubmit={sendMessage} className="flex gap-2">
           <input
             type="text"
-            className="flex-1 border p-2 rounded"
+            className="flex-1 border p-2 rounded text-black" // fixes invisible typing
             placeholder="Type your message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Send</button>
+          <button
+            type="submit"
+            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+          >
+            Send
+          </button>
         </form>
       </div>
     </>

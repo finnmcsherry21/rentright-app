@@ -1,48 +1,77 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Dummy user data (for testing only)
+  const dummyUser = {
+    email: 'test@example.com',
+    password: 'password123',
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // add your login logic here
+    if (email === dummyUser.email && password === dummyUser.password) {
+      alert('Login successful!');
+      router.push('/');
+    } else {
+      alert('Invalid email or password.');
+    }
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email && password) {
+      alert('Signup successful! (Simulated)');
+      router.push('/');
+    } else {
+      alert('Please enter an email and password to sign up.');
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-gray-800 p-8 rounded shadow-md w-full max-w-md space-y-4"
-      >
-        <h1 className="text-2xl font-bold text-center">Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 text-white">
+      <form className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md space-y-6">
+        <h1 className="text-3xl font-bold text-center">Welcome to RentRight</h1>
 
-        {/* Email */}
+        {/* Email input */}
         <input
-         type="email"             // ✅ allows normal text
-         placeholder="Email"
+          type="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="..."
+          className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          required
         />
 
-
-        {/* Password */}
+        {/* Password input */}
         <input
-          type="password"          // ✅ hides text as dots
+          type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="..."
-/>
+          className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          required
+        />
 
-
-        <button
-          type="submit"
-          className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded font-semibold transition"
-        >
-          Sign In
-        </button>
+        {/* Buttons */}
+        <div className="flex justify-between gap-4">
+          <button
+            onClick={handleLogin}
+            className="flex-1 bg-indigo-600 hover:bg-indigo-700 transition py-2 rounded text-lg font-semibold"
+          >
+            Log In
+          </button>
+          <button
+            onClick={handleSignup}
+            className="flex-1 bg-green-600 hover:bg-green-700 transition py-2 rounded text-lg font-semibold"
+          >
+            Sign Up
+          </button>
+        </div>
       </form>
     </div>
   );
